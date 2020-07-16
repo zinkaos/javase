@@ -1,0 +1,80 @@
+서비스
+package test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import test.address;
+import java.sql.*;
+
+@Path("/")
+	public class service {
+		public List<address> getList(){
+			System.out.println("entered getList");
+			List<address> book = new ArrayList<address>();
+			
+			Connection conn=null;
+			Statement stmt=null;
+			
+			try {
+				Class.forName("com.mysql.Jdbc.Driver");
+			conn = DriverManager.getConnection("Jdbc:mysql://localhost:3306/userinfo", "root", "tkdehsdk!0");
+			System.out.println("mysql connection ok.");;
+			
+			stmt = conn.createStatement();
+			ResultSet rs= stmt.executeQuery("select * from logininfo;");
+			System.out.println("mysql query ok.");
+			
+			while(rs.next())
+			{
+				System.out.printf("ID: %s / hddid: %s\n", rs.getString("ID"), rs.getString("hddid"));
+				book.add(new address(rs.getString("ID"),rs.getString("hddid")));		
+			}
+			System.out.println("mysql record finished.");
+			rs.close();
+
+			}
+			catch(ClassNotFoundException cnfe)
+			{
+				System.out.println("Cannot find proper class. - " + cnfe.getMessage());
+			}
+			catch(SQLException se)
+			{
+				System.out.println(se.getMessage());
+			}
+			finally
+			{
+				try 
+				{
+					stmt.close();
+					conn.close();
+				}
+				catch(Exception ignored)
+				{}			
+			}
+			
+			System.out.println("end getList");
+			return book;
+			}
+		
+		@GET
+		@Path("/get")
+		@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+		public List<address> getRESTService() {
+			return getList();
+			}
+		@GET
+		@Path("/check")
+		@Produces(MediaType.TEXT_PLAIN)
+		public Response verifyRESTService()  {
+			return Response.status(200).entity("service is running..").build();
+		}
+		
+
+}

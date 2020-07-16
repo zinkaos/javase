@@ -1,0 +1,31 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import java.util.List;
+import java.util.function.Consumer;
+import test.address;
+
+
+puvlic class serviceTest {
+
+	@Test
+	public void testGetList() {
+		service service = new service();
+		List<address> book = service.getList();
+		
+		if(book.isEmpty())
+			fail("data is emppty of failed to get list.");
+		else {
+			book.forEach(new Consumer<address>() {
+				@Override
+				public void accept(address add) {
+					//TODO Auto-generated method stub
+					System.out.printf("name: %s / hddid: %s\n", add.getName(), add.getPhone());
+					}
+				}
+			);
+		}
+	}
+}
