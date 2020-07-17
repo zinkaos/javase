@@ -1,4 +1,4 @@
-ì„œë¹„ìŠ¤
+#ÄÃ·³Ãß°¡
 package test;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.sql.*;
 			Statement stmt=null;
 			
 			try {
-				Class.forName("com.mysql.Jdbc.Driver");
+				Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("Jdbc:mysql://localhost:3306/userinfo", "root", "tkdehsdk!0");
 			System.out.println("mysql connection ok.");;
 			
@@ -33,8 +33,8 @@ import java.sql.*;
 			
 			while(rs.next())
 			{
-				System.out.printf("ID: %s / hddid: %s\n", rs.getString("ID"), rs.getString("hddid"));
-				book.add(new address(rs.getString("ID"),rs.getString("hddid")));		
+				System.out.printf("Id: %s / Name: %s / Tel: %s\n", rs.getString("Id"), rs.getString("Name"), rs.getString("Tel"));
+				book.add(new address(rs.getString("Id"),rs.getString("Name"),rs.getString("Tel")));		
 			}
 			System.out.println("mysql record finished.");
 			rs.close();

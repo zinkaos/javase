@@ -1,18 +1,24 @@
+#컬럼추가
 package test;
 
 public class address {
-
+	private String id;
 	private String name;
 	private String phone;
 	
+	public String getId() {
+		return id;
+	}
 	public String getName() {
 		return name;
-	}
+	}	
 	public String getPhone() {
-		return phone;
+			return phone;	
 	}
-	public address (String name, String phone) {
+	public address (String id, String name,String phone ) {
+		this.id = id;
 		this.name = name;
 		this.phone = phone;
 	}
+
 }
